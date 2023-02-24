@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ public class MiniMax : MonoBehaviour
         instance.StartCoroutine(Minimax(board, depth, float.NegativeInfinity, float.PositiveInfinity, side == 1, (move, score) =>
         {
             then?.Invoke(move, score);
-            //Debug.Log("Depth: " + depth + " Score: " + score + " Move: " + move + "\nOperations: " + operations + " Time: " + (Time.realtimeSinceStartup - startTime) + " seconds");
+            Debug.Log("Depth: " + depth + " Score: " + score + " Move: " + move + "\nOperations: " + operations + " Time: " + (Time.realtimeSinceStartup - startTime) + " seconds");
             operations = 0;
         }));
     }
@@ -45,7 +46,7 @@ public class MiniMax : MonoBehaviour
         }
 
         // current best next moves
-        List<Vector4Int> bestMoves = new();
+        HashSet<Vector4Int> bestMoves = new();
 
         // used for deciding when to yield the coroutine
         float startTime;
@@ -146,11 +147,12 @@ public class MiniMax : MonoBehaviour
         }
 
         // select move from list
+        Vector4Int[] movesArr = bestMoves.ToArray();
         Vector4Int returnMove = null;
         if (bestMoves.Count > 0)
         {
-            int moveIndex = Random.Range(0, bestMoves.Count);
-            returnMove = bestMoves[moveIndex];
+            int moveIndex = Random.Range(0, movesArr.Length);
+            returnMove = movesArr[moveIndex];
         }
 
         // run then

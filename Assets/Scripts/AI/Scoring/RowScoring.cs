@@ -186,7 +186,7 @@ public class RowScoring : IScorer
         for (int i = 0; i < 8; i++)
         {
             if (GetNumberInLine(b, side, (Axis)i, x, y) == 2)
-                if (GetNumberInLine(b, -side, (Axis)i) == 0)
+                if (GetNumberInLine(b, -side, (Axis)i, x, y) == 0)
                     count++;
         }
 
@@ -213,7 +213,7 @@ public class RowScoring : IScorer
         for (int i = 0; i < 8; i++)
         {
             if (GetNumberInLine(b, side, (Axis)i, x, y) == 1)
-                if (GetNumberInLine(b, -side, (Axis)i) == 0)
+                if (GetNumberInLine(b, -side, (Axis)i, x, y) == 0)
                     count++;
         }
 
