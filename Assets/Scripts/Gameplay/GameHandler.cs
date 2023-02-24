@@ -15,6 +15,13 @@ public class GameHandler : MonoBehaviour
     private Vector2Int lastTargetSubGrid = Vector2Int.zero;
     private TextMeshProUGUI currentTurnTextMesh;
 
+    [SerializeField]
+    private GameObject xPlayerThinking;
+    [SerializeField]
+    private GameObject oPlayerThinking;
+    [SerializeField]
+    private MoveHistoryView mhv;
+
     private List<Vector4Int> moveHistory = new();
 
     private Color defaultColor;
@@ -94,7 +101,11 @@ public class GameHandler : MonoBehaviour
         UpdateTargetGrid(z, w);
         UpdateVisuals();
 
-        moveHistory.Add(new(x, y, z, w)); // add move to list
+        // add move to list
+        Vector4Int move = new(x, y, z, w);
+        moveHistory.Add(move);
+        mhv.AddMove(move);
+
         return true;
     }
 
@@ -132,7 +143,19 @@ public class GameHandler : MonoBehaviour
         }
 
         // Display who's turn it is
-        currentTurnTextMesh.text = board.GetXToMove() ? "X" : "O";
+        bool xToMove = board.GetXToMove();
+        currentTurnTextMesh.text = xToMove ? "X" : "O";
+
+        if (!board.IsGameOver())
+        {
+            xPlayerThinking.SetActive(xToMove);
+            oPlayerThinking.SetActive(!xToMove);
+        }
+        else
+        {
+            xPlayerThinking.SetActive(false);
+            oPlayerThinking.SetActive(false);
+        }
     }
 
     private void DrawFullGrid()
