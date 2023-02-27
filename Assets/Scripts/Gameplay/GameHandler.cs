@@ -15,10 +15,15 @@ public class GameHandler : MonoBehaviour
     private Vector2Int lastTargetSubGrid = Vector2Int.zero;
     private TextMeshProUGUI currentTurnTextMesh;
 
+    // Players
+    private Player playerX;
+    private Player playerO;
+
+    // Other componenets
     [SerializeField]
-    private GameObject xPlayerThinking;
+    private ProfileScript profileX;
     [SerializeField]
-    private GameObject oPlayerThinking;
+    private ProfileScript profileO;
     [SerializeField]
     private MoveHistoryView mhv;
 
@@ -27,18 +32,34 @@ public class GameHandler : MonoBehaviour
     private Color defaultColor;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        fullBoard = GameObject.Find("Full Board").GetComponent<TileGrid>();
-        board = new();
-        defaultColor = fullBoard.GetComponent<Image>().color;
-        currentTurnTextMesh = GameObject.Find("Current Move").GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnEnable()
     {
-        if (board.GetMovesMade() > 0)
+        fullBoard = GameObject.Find("Full Board").GetComponent<TileGrid>();
+        defaultColor = fullBoard.GetComponent<Image>().color;
+        currentTurnTextMesh = GameObject.Find("Current Move").GetComponentInChildren<TextMeshProUGUI>();
+
+        if(board == null)
+        {
+            board = new();
+            RequestMove();
+        }
+        else
+        {
             SetBoard(new());
+        }
+    }
+
+    private void OnDisable()
+    {
+        // clean up players
+        Destroy(playerX);
+        Destroy(playerO);
+        playerX = null;
+        playerO = null;
     }
 
     public List<Vector4Int> GetMoveHistory() => moveHistory;
@@ -53,7 +74,37 @@ public class GameHandler : MonoBehaviour
         this.board = board;
         moveHistory.Clear();
         DrawFullGrid();
+
+        RequestMove();
     }
+
+    public void RequestMove()
+    {
+        if (board.IsGameOver())
+        {
+            profileX.SetThinking(false);
+            profileO.SetThinking(false);
+            return; // game is over do not request move
+        }
+
+        Player playerToMove = board.GetXToMove() ? playerX : playerO;
+
+        Debug.Log(board.GetXToMove() ? "playerX" : "playerO");
+
+        playerToMove.RequestMove(board, HandleRespose);
+
+        profileX.SetThinking(playerX.Thinking);
+        profileO.SetThinking(playerO.Thinking);
+    }
+
+    public void HandleRespose(Vector4Int move)
+    {
+        Move(move);
+        RequestMove();
+    }
+
+    public void SetX(Player player) => playerX = player;
+    public void SetO(Player player) => playerO = player;
 
     public Vector4Int TileToCoord(Tile tile)
     {
@@ -145,17 +196,6 @@ public class GameHandler : MonoBehaviour
         // Display who's turn it is
         bool xToMove = board.GetXToMove();
         currentTurnTextMesh.text = xToMove ? "X" : "O";
-
-        if (!board.IsGameOver())
-        {
-            xPlayerThinking.SetActive(xToMove);
-            oPlayerThinking.SetActive(!xToMove);
-        }
-        else
-        {
-            xPlayerThinking.SetActive(false);
-            oPlayerThinking.SetActive(false);
-        }
     }
 
     private void DrawFullGrid()

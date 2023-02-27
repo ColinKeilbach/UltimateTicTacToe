@@ -7,16 +7,13 @@ using UnityEngine;
 public class LocalMenuPanelScript : MonoBehaviour, ISingleton
 {
     [SerializeField]
+    private GameHandler gameHandler;
+    [SerializeField]
     private ProfileScript one;
     [SerializeField]
     private ProfileScript two;
     [SerializeField]
     private ProfileManager pm;
-
-    [SerializeField]
-    private GameObject xAi;
-    [SerializeField]
-    private GameObject oAi;
 
     public void OnGameStart()
     {
@@ -26,35 +23,39 @@ public class LocalMenuPanelScript : MonoBehaviour, ISingleton
         pm.GetProfileOne().SetText(one.GetText());
         pm.GetProfileTwo().SetText(two.GetText());
 
-        // change AI difficulty
+        Player p;
+
+        // X Player
         switch (one.GetText())
         {
             case "Human":
-                xAi.SetActive(false);
+                p = gameHandler.AddComponent<HumanPlayer>();
+                gameHandler.SetX(p);
                 break;
             case "Easy Bot":
-                xAi.GetComponent<AIPlayer>().SetStyle(AIPlayer.Style.Random);
-                xAi.SetActive(true);
+                p = gameHandler.AddComponent<RandomPlayer>();
+                gameHandler.SetX(p);
                 break;
             case "Hard Bot":
-                xAi.GetComponent<AIPlayer>().SetStyle(AIPlayer.Style.MiniMax);
-                xAi.SetActive(true);
+                p = gameHandler.AddComponent<MiniMaxPlayer>();
+                gameHandler.SetX(p);
                 break;
         }
 
-        // change AI difficulty
+        // O Player
         switch (two.GetText())
         {
             case "Human":
-                oAi.SetActive(false);
+                p = gameHandler.AddComponent<HumanPlayer>();
+                gameHandler.SetO(p);
                 break;
             case "Easy Bot":
-                oAi.GetComponent<AIPlayer>().SetStyle(AIPlayer.Style.Random);
-                oAi.SetActive(true);
+                p = gameHandler.AddComponent<RandomPlayer>();
+                gameHandler.SetO(p);
                 break;
             case "Hard Bot":
-                oAi.GetComponent<AIPlayer>().SetStyle(AIPlayer.Style.MiniMax);
-                oAi.SetActive(true);
+                p = gameHandler.AddComponent<MiniMaxPlayer>();
+                gameHandler.SetO(p);
                 break;
         }
     }

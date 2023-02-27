@@ -6,17 +6,16 @@ using UnityEngine.UI;
 
 public class ProfileScript : MonoBehaviour
 {
+    [SerializeField]
     private Image image;
+    [SerializeField]
     private TextMeshProUGUI textMesh;
-
-    private void Awake()
-    {
-        image = GetComponentsInChildren<Image>()[1];
-        textMesh = GetComponentInChildren<TextMeshProUGUI>();
-    }
+    [SerializeField]
+    private GameObject thinkingAnimation;
 
     public void SetImage(Sprite sprite) => image.sprite = sprite;
     public Sprite GetSprite() => image.sprite;
     public void SetText(string text) => textMesh.text = text;
     public string GetText() => textMesh.text;
+    public void SetThinking(bool active) => thinkingAnimation.SetActive(active);
 }
