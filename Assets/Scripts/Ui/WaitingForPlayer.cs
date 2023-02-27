@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WaitingForPlayer : MonoBehaviour
 {
@@ -11,6 +13,17 @@ public class WaitingForPlayer : MonoBehaviour
     private ProfileScript player;
     [SerializeField]
     private TextMeshProUGUI gameId;
+    [SerializeField]
+    private GameHandler gameHandler;
+    [SerializeField]
+    private ProfileScript profileX;
+    [SerializeField]
+    private ProfileScript profileO;
+    [SerializeField]
+    private Connection connection;
+
+    public UnityEvent onGameReady;
+
     public void OnMessage(Command command)
     {
         if(command.command == "created")
@@ -20,9 +33,20 @@ public class WaitingForPlayer : MonoBehaviour
             gameId.text = command.param;
             player.SetText(usernameField.text);
         }
-        else if(command.command == "connected")
+        else if (command.command == "connected")
         {
-            // handle player joining
+            profileX.SetText(usernameField.text);
+            profileO.SetText(command.param);
+
+            LocalPlayer lp = gameHandler.AddComponent<LocalPlayer>();
+            lp.SetConnection(connection);
+            gameHandler.SetX(lp);
+
+            NetworkPlayer np = gameHandler.AddComponent<NetworkPlayer>();
+            np.SetConnection(connection);
+            gameHandler.SetO(np);
+
+            onGameReady?.Invoke();
         }
     }
 }

@@ -6,15 +6,23 @@ using UnityEngine;
 public class TextDropEffect : MonoBehaviour
 {
     private TextMeshProUGUI textMesh;
+    private float defaultSize = -1;
 
     private void OnEnable()
     {
         textMesh = GetComponent<TextMeshProUGUI>();
 
-        float endSize = textMesh.fontSize;
-        float startSize = endSize * 1.2f;
+        if (defaultSize == -1)
+            defaultSize = textMesh.fontSize;
 
-        StartCoroutine(DropEffect(startSize, endSize, 0.15f));
+        float startSize = defaultSize * 1.2f;
+
+        StartCoroutine(DropEffect(startSize, defaultSize, 0.15f));
+    }
+
+    private void OnDisable()
+    {
+        textMesh.fontSize = defaultSize;
     }
 
     private IEnumerator DropEffect(float start, float end, float waitTime)

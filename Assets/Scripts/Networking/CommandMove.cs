@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class CommandMove : Command
 {
-    public CommandMove(string move) : base("move", move) { }
+    public CommandMove(Vector4Int move) : base("move", JsonUtility.ToJson(move)) { }
 }

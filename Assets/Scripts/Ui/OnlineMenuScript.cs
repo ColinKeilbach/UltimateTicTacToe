@@ -1,13 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class OnlineMenuScript : MonoBehaviour
 {
     [SerializeField]
     private Connection connection;
+    [SerializeField]
+    private GameHandler gameHandler;
+    [SerializeField]
+    private ProfileScript profileX;
+    [SerializeField]
+    private ProfileScript profileO;
     [SerializeField]
     private TMP_InputField usernameField;
     [SerializeField]
@@ -16,6 +22,8 @@ public class OnlineMenuScript : MonoBehaviour
     private TextMeshProUGUI errorTextMesh;
     [SerializeField]
     private WaitingForPlayer wfp;
+
+    public UnityEvent onGameReady;
 
     public void OnCreate()
     {
@@ -57,9 +65,24 @@ public class OnlineMenuScript : MonoBehaviour
     {
         connection.onMessage.RemoveListener(HandleJoinResponse);
 
-        if(command.command == "error")
+        if (command.command == "error")
         {
             errorTextMesh.text = command.param;
+        }
+        else if (command.command == "connected")
+        {
+            profileX.SetText(command.param);
+            profileO.SetText(usernameField.text);
+
+            NetworkPlayer np = gameHandler.AddComponent<NetworkPlayer>();
+            np.SetConnection(connection);
+            gameHandler.SetX(np);
+
+            LocalPlayer lp = gameHandler.AddComponent<LocalPlayer>();
+            lp.SetConnection(connection);
+            gameHandler.SetO(lp);
+
+            onGameReady?.Invoke();
         }
     }
 

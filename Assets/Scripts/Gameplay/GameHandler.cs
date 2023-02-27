@@ -73,6 +73,7 @@ public class GameHandler : MonoBehaviour
 
         this.board = board;
         moveHistory.Clear();
+        mhv.Clear();
         DrawFullGrid();
 
         RequestMove();

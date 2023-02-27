@@ -14,4 +14,12 @@ public class MoveHistoryView : MonoBehaviour
         GameObject go = Instantiate(moveViewPrefab, content);
         go.GetComponent<MoveView>().SetText(move.ToString());
     }
+
+    public void Clear()
+    {
+        foreach(Transform child in content)
+        {
+            Destroy(child.gameObject);
+        }
+    }
 }
