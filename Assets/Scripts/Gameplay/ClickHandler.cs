@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -11,6 +12,8 @@ public class ClickHandler : MonoBehaviour
     private EventSystem eventSystem;
     private GraphicRaycaster raycaster;
     private GameHandler gameHandler;
+
+    public UnityEvent<Vector4Int> onClick;
 
     private void Awake()
     {
@@ -30,7 +33,7 @@ public class ClickHandler : MonoBehaviour
 
             if (target != null)
             {
-                gameHandler.Move(gameHandler.TileToCoord(target.GetComponent<Tile>()));
+                onClick?.Invoke(gameHandler.TileToCoord(target.GetComponent<Tile>()));
             }
         }
     }

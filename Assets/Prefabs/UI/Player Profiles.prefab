@@ -242,6 +242,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00e104a9ed1d1b041971b1c28f475b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 3614811690060589877}
+  textMesh: {fileID: 2045243002196251390}
+  thinkingAnimation: {fileID: 7857361599933449321}
 --- !u!1 &4111872242897246448
 GameObject:
   m_ObjectHideFlags: 0
