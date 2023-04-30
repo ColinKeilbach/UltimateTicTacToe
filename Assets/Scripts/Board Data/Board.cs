@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
-public class Board : ICloneable
+public class Board
 {
     #region Variables
 
@@ -167,20 +167,25 @@ public class Board : ICloneable
 
     #endregion
 
-    #region ICloneable Implementation
+    #region Clone
 
     /// <summary>
     /// Deep clone of Board
     /// </summary>
     /// <returns></returns>
-    public object Clone()
+    public Board Clone()
     {
-        using MemoryStream stream = new();
-        BinaryFormatter formatter = new();
-
-        formatter.Serialize(stream, this);
-        stream.Position = 0;
-        return formatter.Deserialize(stream);
+        Board b = this;
+        return new()
+        {
+            boardValue = b.boardValue,
+            mainBoard = (int[,])b.mainBoard.Clone(),
+            subBoards = (int[,,,])b.subBoards.Clone(),
+            xToMove = b.xToMove,
+            freeMove = b.freeMove,
+            targetBoard = (int[])b.targetBoard.Clone(),
+            movesMade = b.movesMade
+        };
     }
 
     #endregion
