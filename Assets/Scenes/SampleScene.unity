@@ -523,54 +523,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6120977864017392833, guid: f22fb46812d86194a90e8bce6e40aa17, type: 3}
   m_PrefabInstance: {fileID: 6120977862958860868}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1622594535
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1622594536}
-  - component: {fileID: 1622594537}
-  m_Layer: 0
-  m_Name: GameTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1622594536
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622594535}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -415.447, y: 8.844468, z: -5.7037854}
-  m_LocalScale: {x: 1.1481481, y: 1.1481481, z: 1.1481481}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3046844}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1622594537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622594535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8da168b61f5e1cf4b81ae400cd6bec6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfGamesPlayed: 0
-  timesWonX: 0
-  timesDraw: 0
-  timesWonO: 0
 --- !u!114 &1872203610 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5557359851765259686, guid: 2f47a10130001a340bf0e7507e547e80, type: 3}

@@ -1,10 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -93,14 +88,10 @@ public class Board
         movesMade++;
     }
 
+    private readonly RowScoring rs = new();
+
     private void CheckWin()
     {
-        RowScoring rs = new();
-
-#if UNITY_EDITOR
-        Debug.LogWarning("CheckWin() uses the GetThreeInARow() function from RowScoring.");
-#endif
-
         if (rs.GetThreeInARow(this, -1))
             boardValue = -1;
         else if (rs.GetThreeInARow(this, 1))
@@ -108,8 +99,6 @@ public class Board
     }
     private void Update(int x, int y)
     {
-        RowScoring rs = new();
-
         if (rs.GetThreeInARow(this, -1, x, y))
             SetValue(x, y, -1);
         else if (rs.GetThreeInARow(this, 1, x, y))
