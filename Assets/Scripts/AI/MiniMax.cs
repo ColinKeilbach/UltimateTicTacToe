@@ -8,7 +8,6 @@ public class MiniMax : MonoBehaviour
 {
     private static MiniMax instance;
     private static int operations = 0;
-    private static readonly float frameBudget = 1000 / Application.targetFrameRate;
     private static IScorer scorer;
 
     public delegate void Then(Vector4Int move, float score);
@@ -48,10 +47,6 @@ public class MiniMax : MonoBehaviour
         // current best next moves
         HashSet<Vector4Int> bestMoves = new();
 
-        // used for deciding when to yield the coroutine
-        float startTime;
-        float endTime;
-
         // Get list of possible moves
         List<Vector4Int> moves = position.GetPossibleMoves();
 
@@ -62,8 +57,6 @@ public class MiniMax : MonoBehaviour
 
             foreach (Vector4Int move in moves)
             {
-                startTime = Time.realtimeSinceStartup;
-
                 operations++;
 
                 // Make move
@@ -89,12 +82,6 @@ public class MiniMax : MonoBehaviour
                 alpha = Mathf.Max(alpha, eval);
                 if (beta <= alpha)
                     break;
-
-                endTime = Time.realtimeSinceStartup;
-
-                // yield if needed
-                if (endTime - startTime >= frameBudget)
-                    yield return null;
             }
 
             // return the evaluated score
@@ -107,8 +94,6 @@ public class MiniMax : MonoBehaviour
 
             foreach (Vector4Int move in moves)
             {
-                startTime = Time.realtimeSinceStartup;
-
                 operations++;
 
                 // Make move
@@ -134,12 +119,6 @@ public class MiniMax : MonoBehaviour
                 beta = Mathf.Min(beta, eval);
                 if (beta <= alpha)
                     break;
-
-                endTime = Time.realtimeSinceStartup;
-
-                // yield if needed
-                if (endTime - startTime >= frameBudget)
-                    yield return null;
             }
 
             // return the evaluated score

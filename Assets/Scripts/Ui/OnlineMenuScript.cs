@@ -25,6 +25,11 @@ public class OnlineMenuScript : MonoBehaviour
 
     public UnityEvent onGameReady;
 
+    private void OnEnable()
+    {
+        gameIDField.text = "";
+    }
+
     public void OnCreate()
     {
         if (usernameField.text == "")

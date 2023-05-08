@@ -1,14 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
-public class Board : ICloneable
+public class Board
 {
     #region Variables
 
@@ -93,14 +88,10 @@ public class Board : ICloneable
         movesMade++;
     }
 
+    private readonly RowScoring rs = new();
+
     private void CheckWin()
     {
-        RowScoring rs = new();
-
-#if UNITY_EDITOR
-        Debug.LogWarning("CheckWin() uses the GetThreeInARow() function from RowScoring.");
-#endif
-
         if (rs.GetThreeInARow(this, -1))
             boardValue = -1;
         else if (rs.GetThreeInARow(this, 1))
@@ -108,8 +99,6 @@ public class Board : ICloneable
     }
     private void Update(int x, int y)
     {
-        RowScoring rs = new();
-
         if (rs.GetThreeInARow(this, -1, x, y))
             SetValue(x, y, -1);
         else if (rs.GetThreeInARow(this, 1, x, y))
@@ -167,20 +156,25 @@ public class Board : ICloneable
 
     #endregion
 
-    #region ICloneable Implementation
+    #region Clone
 
     /// <summary>
     /// Deep clone of Board
     /// </summary>
     /// <returns></returns>
-    public object Clone()
+    public Board Clone()
     {
-        using MemoryStream stream = new();
-        BinaryFormatter formatter = new();
-
-        formatter.Serialize(stream, this);
-        stream.Position = 0;
-        return formatter.Deserialize(stream);
+        Board b = this;
+        return new()
+        {
+            boardValue = b.boardValue,
+            mainBoard = (int[,])b.mainBoard.Clone(),
+            subBoards = (int[,,,])b.subBoards.Clone(),
+            xToMove = b.xToMove,
+            freeMove = b.freeMove,
+            targetBoard = (int[])b.targetBoard.Clone(),
+            movesMade = b.movesMade
+        };
     }
 
     #endregion
