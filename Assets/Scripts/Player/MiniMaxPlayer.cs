@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class MiniMaxPlayer : Player
 {
+    private IScorer scorer = new RowScoring();
+    private ThreadedMiniMax tmm = new();
     public override void RequestMove(Board board, ReturnMove returnMove)
     {
-        MiniMax.Evaluate(board, new RowScoring(), Tile.ValueToInt(board.GetXToMove() ? Tile.Value.X : Tile.Value.O), then: (move, score) =>
+        if (true)
         {
-            Thinking = false;
-            returnMove.Invoke(move);
-        });
+            tmm.Evaluate(board, Tile.ValueToInt(board.GetXToMove() ? Tile.Value.X : Tile.Value.O), 5, returnMove.Invoke);
+        }
+        else
+            MiniMax.Evaluate(board, scorer, Tile.ValueToInt(board.GetXToMove() ? Tile.Value.X : Tile.Value.O), 3, (move, score) =>
+            {
+                returnMove.Invoke(move);
+            });
     }
 }
