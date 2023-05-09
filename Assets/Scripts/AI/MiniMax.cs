@@ -37,6 +37,8 @@ public class MiniMax : MonoBehaviour
 
     private static IEnumerator Minimax(Board position, int depth, float alpha, float beta, bool maximizingPlayer, Then then = null)
     {
+        operations++;
+
         if (depth <= 0 || position.IsGameOver())
         {
             returnScore = scorer.Score(position);
@@ -57,8 +59,6 @@ public class MiniMax : MonoBehaviour
 
             foreach (Vector4Int move in moves)
             {
-                operations++;
-
                 // Make move
                 Board newPosition = position.Clone() as Board;
                 newPosition.Move(move);
@@ -94,8 +94,6 @@ public class MiniMax : MonoBehaviour
 
             foreach (Vector4Int move in moves)
             {
-                operations++;
-
                 // Make move
                 Board newPosition = position.Clone() as Board;
                 newPosition.Move(move);

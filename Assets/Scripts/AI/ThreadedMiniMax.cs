@@ -12,16 +12,18 @@ public class ThreadedMiniMax : MonoBehaviour
 
     public void Evaluate(Board board, int side, int depth, Next next)
     {
+        float start = Time.realtimeSinceStartup;
         BackgroundWorker worker = new();
         worker.DoWork += (s, e) =>
         {
             evals = 0;
             e.Result = Evaluate(board, depth, float.NegativeInfinity, float.PositiveInfinity, side == 1, out float score);
-            Debug.Log(evals);
         };
         worker.RunWorkerCompleted += (s, e) =>
         {
             next.Invoke((Vector4Int)e.Result);
+            float time = Time.realtimeSinceStartup - start;
+            Debug.Log("Operations: " + evals + " Time: " + time + " seconds");
         };
         worker.RunWorkerAsync();
     }
