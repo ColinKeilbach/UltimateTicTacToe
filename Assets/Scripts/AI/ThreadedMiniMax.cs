@@ -12,6 +12,16 @@ public class ThreadedMiniMax : MonoBehaviour
 
     public void Evaluate(Board board, int side, int depth, Next next)
     {
+#if PLATFORM_WEBGL // WebGL cannot use threads
+        float start = Time.realtimeSinceStartup;
+
+        evals = 0;
+        Vector4Int result = Evaluate(board, depth, float.NegativeInfinity, float.PositiveInfinity, side == 1, out float score);
+
+        next.Invoke(result);
+        float time = Time.realtimeSinceStartup - start;
+        Debug.Log("Operations: " + evals + " Time: " + time + " seconds");
+#else
         float start = Time.realtimeSinceStartup;
         BackgroundWorker worker = new();
         worker.DoWork += (s, e) =>
@@ -26,6 +36,7 @@ public class ThreadedMiniMax : MonoBehaviour
             Debug.Log("Operations: " + evals + " Time: " + time + " seconds");
         };
         worker.RunWorkerAsync();
+#endif
     }
 
     private Vector4Int Evaluate(Board position, int depth, float alpha, float beta, bool maximizingPlayer, out float score)

@@ -5,18 +5,6 @@ using UnityEngine;
 
 public class MiniMaxPlayer : Player
 {
-# if PLATFORM_WEBGL
-    private readonly IScorer scorer = new RowScoring();
-    public override void RequestMove(Board board, ReturnMove returnMove)
-    {
-        Thinking = true;
-        MiniMax.Evaluate(board, scorer, Tile.ValueToInt(board.GetXToMove() ? Tile.Value.X : Tile.Value.O), 3, (move, score) =>
-        {
-            Thinking = false;
-            returnMove.Invoke(move);
-        });
-    }
-#else
     private readonly ThreadedMiniMax tmm = new();
     public override void RequestMove(Board board, ReturnMove returnMove)
     {
@@ -27,5 +15,4 @@ public class MiniMaxPlayer : Player
             returnMove.Invoke(move);
         });
     }
-#endif
 }

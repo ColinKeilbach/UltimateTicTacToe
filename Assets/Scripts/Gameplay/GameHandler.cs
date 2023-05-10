@@ -45,12 +45,19 @@ public class GameHandler : MonoBehaviour
         if(board == null)
         {
             board = new();
-            RequestMove();
+            // request a move next frame after everything is set up
+            StartCoroutine(WaitToRequest());
         }
         else
         {
             SetBoard(new());
         }
+    }
+
+    private IEnumerator WaitToRequest()
+    {
+        yield return null;
+        RequestMove();
     }
 
     private void OnDisable()
@@ -64,7 +71,7 @@ public class GameHandler : MonoBehaviour
 
     public List<Vector4Int> GetMoveHistory() => moveHistory;
 
-    public Board GetBoard() => board.Clone() as Board;
+    public Board GetBoard() => board.Clone();
     public void SetBoard(Board board)
     {
         // Stop highlighting last grid
@@ -128,7 +135,8 @@ public class GameHandler : MonoBehaviour
     public bool Move(Vector4Int coord, Tile.Value value) => Move(coord.x, coord.y, coord.z, coord.w, value);
     public bool Move(int x, int y, int z, int w, Tile.Value value)
     {
-        if (x == -1 || y == -1 || z == -1 || w == -1) return false; // Tile was not found
+        if (x < 0 || y < 0 || z < 0 || w < 0) return false; // Tile was not found
+        if (x >= 3 || y >= 3 || z >= 3 || w >= 3) return false; // Tile was not found
 
         if (!freeMove && new Vector2Int(x, y) != targetSubGrid) return false; // Not in correct grid
 
