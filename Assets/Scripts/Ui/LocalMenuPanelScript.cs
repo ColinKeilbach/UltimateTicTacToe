@@ -33,11 +33,11 @@ public class LocalMenuPanelScript : MonoBehaviour, ISingleton
                 gameHandler.SetX(p);
                 break;
             case "Easy Bot":
-                p = gameHandler.AddComponent<MiniMaxMatrixPlayer>();
+                p = gameHandler.AddComponent<MiniMaxPlayer>();
                 gameHandler.SetX(p);
                 break;
             case "Hard Bot":
-                p = gameHandler.AddComponent<MiniMaxPlayer>();
+                p = gameHandler.AddComponent<AggressivePlayer>();
                 gameHandler.SetX(p);
                 break;
         }
@@ -50,11 +50,11 @@ public class LocalMenuPanelScript : MonoBehaviour, ISingleton
                 gameHandler.SetO(p);
                 break;
             case "Easy Bot":
-                p = gameHandler.AddComponent<MiniMaxMatrixPlayer>();
+                p = gameHandler.AddComponent<MiniMaxPlayer>();
                 gameHandler.SetO(p);
                 break;
             case "Hard Bot":
-                p = gameHandler.AddComponent<MiniMaxPlayer>();
+                p = gameHandler.AddComponent<AggressivePlayer>();
                 gameHandler.SetO(p);
                 break;
         }
