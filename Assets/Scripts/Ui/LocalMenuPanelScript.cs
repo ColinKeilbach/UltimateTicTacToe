@@ -23,40 +23,42 @@ public class LocalMenuPanelScript : MonoBehaviour, ISingleton
         pm.GetProfileOne().SetText(one.GetText());
         pm.GetProfileTwo().SetText(two.GetText());
 
-        Player p;
+        Player p = null;
 
         // X Player
         switch (one.GetText())
         {
             case "Human":
                 p = gameHandler.AddComponent<HumanPlayer>();
-                gameHandler.SetX(p);
                 break;
-            case "Easy Bot":
+            case "Random Bot":
+                p = gameHandler.AddComponent<RandomPlayer>();
+                break;
+            case "Minimax Bot":
                 p = gameHandler.AddComponent<MiniMaxPlayer>();
-                gameHandler.SetX(p);
                 break;
-            case "Hard Bot":
+            case "Aggressive Bot":
                 p = gameHandler.AddComponent<AggressivePlayer>();
-                gameHandler.SetX(p);
                 break;
         }
+        gameHandler.SetX(p);
 
         // O Player
         switch (two.GetText())
         {
             case "Human":
                 p = gameHandler.AddComponent<HumanPlayer>();
-                gameHandler.SetO(p);
                 break;
-            case "Easy Bot":
+            case "Random Bot":
+                p = gameHandler.AddComponent<RandomPlayer>();
+                break;
+            case "Minimax Bot":
                 p = gameHandler.AddComponent<MiniMaxPlayer>();
-                gameHandler.SetO(p);
                 break;
-            case "Hard Bot":
+            case "Aggressive Bot":
                 p = gameHandler.AddComponent<AggressivePlayer>();
-                gameHandler.SetO(p);
                 break;
         }
+        gameHandler.SetO(p);
     }
 }

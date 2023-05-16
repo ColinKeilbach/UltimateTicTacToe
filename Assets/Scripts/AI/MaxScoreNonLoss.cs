@@ -151,7 +151,6 @@ public class MaxScoreNonLoss : MonoBehaviour
             int moveIndex = random.Next(0, movesArr.Length);
             returnMove = movesArr[moveIndex];
         }
-        Debug.Log(bestMoves.Count);
 
         // return
         return returnMove;

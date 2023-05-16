@@ -97,8 +97,6 @@ public class GameHandler : MonoBehaviour
 
         Player playerToMove = board.GetXToMove() ? playerX : playerO;
 
-        Debug.Log(board.GetXToMove() ? "playerX" : "playerO");
-
         playerToMove.RequestMove(board, HandleRespose);
 
         profileX.SetThinking(playerX.Thinking);

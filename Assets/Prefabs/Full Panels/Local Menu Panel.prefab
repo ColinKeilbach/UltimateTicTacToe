@@ -883,7 +883,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 2}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 0, y: 268}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &582820777267151463
 CanvasRenderer:
@@ -1214,9 +1214,11 @@ MonoBehaviour:
     m_Options:
     - m_Text: Human
       m_Image: {fileID: 0}
-    - m_Text: Easy Bot
+    - m_Text: Random Bot
       m_Image: {fileID: 0}
-    - m_Text: Hard Bot
+    - m_Text: Minimax Bot
+      m_Image: {fileID: 0}
+    - m_Text: Aggressive Bot
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1264,6 +1266,7 @@ MonoBehaviour:
   profile: {fileID: 2892714608440742961}
   sprites:
   - {fileID: 21300000, guid: 68633f7a820c00048a396ca75d7f196a, type: 3}
+  - {fileID: 21300000, guid: ff60a631f12fb8240826d0f72d8162f0, type: 3}
   - {fileID: 21300000, guid: ff60a631f12fb8240826d0f72d8162f0, type: 3}
   - {fileID: 21300000, guid: ff60a631f12fb8240826d0f72d8162f0, type: 3}
 --- !u!1 &582820777437887095
@@ -1475,11 +1478,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d239eff755f8b46be5c78d12e9658c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameHandler: {fileID: 0}
   one: {fileID: 2892714609311095402}
   two: {fileID: 2892714608440742961}
   pm: {fileID: 0}
-  xAi: {fileID: 0}
-  oAi: {fileID: 0}
 --- !u!1 &582820777613184027
 GameObject:
   m_ObjectHideFlags: 0
@@ -1519,7 +1521,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 2}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 0, y: 268}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &582820777613184023
 CanvasRenderer:
@@ -1943,7 +1945,7 @@ MonoBehaviour:
   m_MinWidth: 452
   m_MinHeight: -1
   m_PreferredWidth: 452
-  m_PreferredHeight: 100
+  m_PreferredHeight: 80
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -2734,9 +2736,11 @@ MonoBehaviour:
     m_Options:
     - m_Text: Human
       m_Image: {fileID: 0}
-    - m_Text: Easy Bot
+    - m_Text: Random Bot
       m_Image: {fileID: 0}
-    - m_Text: Hard Bot
+    - m_Text: Minimax Bot
+      m_Image: {fileID: 0}
+    - m_Text: Aggressive Bot
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2784,6 +2788,7 @@ MonoBehaviour:
   profile: {fileID: 2892714609311095402}
   sprites:
   - {fileID: 21300000, guid: 68633f7a820c00048a396ca75d7f196a, type: 3}
+  - {fileID: 21300000, guid: ff60a631f12fb8240826d0f72d8162f0, type: 3}
   - {fileID: 21300000, guid: ff60a631f12fb8240826d0f72d8162f0, type: 3}
   - {fileID: 21300000, guid: ff60a631f12fb8240826d0f72d8162f0, type: 3}
 --- !u!1 &582820778515433823
@@ -2891,7 +2896,7 @@ MonoBehaviour:
   m_MinWidth: 452
   m_MinHeight: -1
   m_PreferredWidth: 452
-  m_PreferredHeight: 100
+  m_PreferredHeight: 80
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
